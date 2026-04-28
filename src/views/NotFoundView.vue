@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
-    <h1>Page Not Found</h1>
-    <p>The page you requested does not exist.</p>
-  </div>
+  <section class="auth-section">
+    <div class="auth-card">
+      <h1>404</h1>
+      <p>Page not found.</p>
+      <RouterLink to="/" class="primary-btn">Go Home</RouterLink>
+    </div>
+  </section>
 </template>
-
-<script setup>
-</script>
-
-<style scoped>
-.container{padding:1rem}
-</style>
