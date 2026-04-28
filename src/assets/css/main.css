@@ -1,0 +1,20 @@
+/* Minimal base styles for the app */
+:root{
+  --bg: #ffffff;
+  --text: #111827;
+}
+*{box-sizing:border-box}
+html,body,#app{height:100%}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+a{color:inherit;text-decoration:none}
+
+/* Utility helpers */
+.container{max-width:1200px;margin:0 auto;padding:0 1rem}
