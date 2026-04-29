@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { trackAddToCart } from '@/utils/tracking'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -27,6 +28,9 @@ export const useCartStore = defineStore('cart', {
           qty: 1,
         })
       }
+
+      // 🔥 Track AddToCart
+      trackAddToCart(product, 1)
     },
 
     increaseQty(id) {
