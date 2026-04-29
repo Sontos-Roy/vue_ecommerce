@@ -10,9 +10,6 @@
           <span class="badge">{{ productStore.product.category }}</span>
           <h1>{{ productStore.product.name }}</h1>
           <h2>৳{{ productStore.product.price }}</h2>
-          <p>
-            This is a premium ecommerce product. Later we will load full description from Laravel API.
-          </p>
 
           <button class="primary-btn" @click="cart.addToCart(productStore.product)">
             Add to Cart
@@ -30,6 +27,7 @@ import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProductStore } from '@/stores/productStore'
 import { useCartStore } from '@/stores/cartStore'
+import { trackViewContent } from '@/utils/tracking'
 
 const route = useRoute()
 const productStore = useProductStore()
@@ -40,6 +38,11 @@ onMounted(async () => {
     await productStore.fetchProducts()
   }
 
-  productStore.fetchProduct(route.params.id)
+  await productStore.fetchProduct(route.params.id)
+
+  // 🔥 Track ViewContent
+  if (productStore.product) {
+    trackViewContent(productStore.product)
+  }
 })
 </script>
