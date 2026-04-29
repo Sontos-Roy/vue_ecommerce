@@ -25,7 +25,7 @@
 
       <div class="product-grid">
         <ProductCard
-          v-for="product in productStore.products.slice(0, 4)"
+          v-for="product in (Array.isArray(productStore.products) ? productStore.products.slice(0, 4) : [])"
           :key="product.id"
           :product="product"
         />
