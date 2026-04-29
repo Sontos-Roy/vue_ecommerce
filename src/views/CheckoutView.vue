@@ -9,7 +9,7 @@
           <input type="text" placeholder="Phone Number" />
           <textarea placeholder="Delivery Address"></textarea>
 
-          <button type="button" class="primary-btn">Place Order</button>
+          <button type="button" class="primary-btn" @click="placeOrder">Place Order</button>
         </form>
       </div>
 
@@ -30,7 +30,20 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
+import { trackInitiateCheckout, trackPurchase } from '@/utils/tracking'
 
 const cart = useCartStore()
+
+onMounted(() => {
+  // 🔥 Track checkout start
+  trackInitiateCheckout(cart.items)
+})
+
+function placeOrder() {
+  // 🔥 Track purchase (demo)
+  trackPurchase(cart.items)
+  alert('Order placed (demo)')
+}
 </script>
