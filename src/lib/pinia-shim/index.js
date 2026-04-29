@@ -20,3 +20,41 @@ export function createPinia() {
 }
 
 export default createPinia
+
+// Minimal `defineStore` shim to support stores created with Pinia's API.
+import { reactive } from 'vue'
+
+export function defineStore(id, options) {
+  let _store
+  return function useStore() {
+    if (_store) return _store
+
+    const state = (typeof options.state === 'function') ? options.state() : (options.state || {})
+    _store = reactive({ ...state })
+
+    // attach getters as computed-like properties (simple, non-cached)
+    if (options.getters) {
+      Object.keys(options.getters).forEach((key) => {
+        Object.defineProperty(_store, key, {
+          get() {
+            try {
+              return options.getters[key].call(_store, _store)
+            } catch (e) {
+              return undefined
+            }
+          },
+          enumerable: true,
+        })
+      })
+    }
+
+    // bind actions to the store
+    if (options.actions) {
+      Object.keys(options.actions).forEach((key) => {
+        _store[key] = options.actions[key].bind(_store)
+      })
+    }
+
+    return _store
+  }
+}
